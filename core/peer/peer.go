@@ -14,7 +14,7 @@ type Peer struct {
 	port string
 }
 
-func (peerInfo *PeerInfo) getPeers() []Peer {
+func (peerInfo *PeerInfo) GetPeers() []Peer {
 	return peerInfo.Peers
 }
 
