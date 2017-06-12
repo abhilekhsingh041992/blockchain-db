@@ -3,13 +3,14 @@ package common
 
 type Block struct {
 	Header *BlockHeader  `json:"header"`
-	Data *string  `json:"data"`
+	Data string  `json:"data"`
 	MetaData *BlockMetaData  `json:"metaData"`
 }
 
 
 type BlockHeader struct {
 	Number       uint64  `json:"number"`
+	Timestamp    int64  `json:"timestamp"`
 	PreviousHash string  `json:"previousHash"`
 	DataHash     string  `json:"dataHash"`
 }

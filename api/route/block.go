@@ -8,6 +8,7 @@ import (
 	"strconv"
 	 bk "github.com/blockchain-db/core/common"
 	 state "github.com/blockchain-db/core/state"
+	"log"
 )
 
 func AddBlock(w http.ResponseWriter, r *http.Request) {
@@ -21,13 +22,23 @@ func AddBlock(w http.ResponseWriter, r *http.Request) {
 func GetBlockByNumber(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	blockNum, _ := strconv.ParseUint(vars["id"], 10, 64)
-	block, _ := state.BlockStore.GetBlockByNumber(blockNum)
+	block, err := state.BlockStore.GetBlockByNumber(blockNum)
+	if err != nil {
+		log.Printf("HTTP %d - %s", 401, err)
+		http.Error(w, err.Error(), 401)
+		return
+	}
 	json.NewEncoder(w).Encode(block)
 }
 
 func GetBlockByHash(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	blockHash := vars["blockHash"]
-	block, _ := state.BlockStore.GetBlockByHash([]byte(blockHash))
+	block, err := state.BlockStore.GetBlockByHash([]byte(blockHash))
+	if err != nil {
+		log.Printf("HTTP %d - %s", 401, err)
+		http.Error(w, err.Error(), 401)
+		return
+	}
 	json.NewEncoder(w).Encode(block)
 }
