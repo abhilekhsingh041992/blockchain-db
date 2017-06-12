@@ -1,5 +1,9 @@
 package common
 
+import (
+	"encoding/json"
+	"github.com/blockchain-db/util"
+)
 
 type Block struct {
 	Header *BlockHeader  `json:"header"`
@@ -27,4 +31,12 @@ func NewBlock() *Block {
 	block.Header.Number = 1
 
 	return block
+}
+
+func (block *Block) Hash() (string, error)  {
+	dataBytes, err := json.Marshal(block)
+	if err != nil {
+		return "", nil
+	}
+	return util.Hash(string(dataBytes)), nil
 }

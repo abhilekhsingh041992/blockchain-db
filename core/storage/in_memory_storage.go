@@ -3,7 +3,6 @@ package storage
 import (
 	bk "github.com/blockchain-db/core/common"
 	"time"
-	"github.com/blockchain-db/util"
 	"errors"
 )
 
@@ -42,7 +41,7 @@ func (blockStore *InMemoryBlockStore) AddBlock(block *bk.Block) error {
 	block.Header = &bk.BlockHeader{}
 	block.Header.Timestamp = time.Now().UnixNano()
 	block.Header.Number = blockChain.Height
-	hash := util.Hash(block.Data, block.Header.Timestamp)
+	hash, _ := block.Hash()
 	block.Header.DataHash = hash
 	block.Header.PreviousHash = blockChain.CurrentBlockHash
 
